@@ -1,0 +1,20 @@
+---
+- include: setup.yaml
+
+- include: register-deployment-node-ip.yaml
+
+- name: check if Apache CouchDB is already installed
+  script: couchdb-version.ps1
+  register: couchdb_status
+
+- include: install.yaml
+  when: couchdb_status.stdout.find("1.6.1") == -1
+
+- name: create a CouchDB local.ini file from a template and save it on the deployment node
+  local_action: template src=local.ini.j2 dest={{ web_root }}/ansible/local.ini-{{ inventory_hostname }}
+  sudo: yes
+  notify:
+  - restart couchdb
+
+- name: customize the CouchDB configuration
+  win_get_url: url=http://{{ deployment_node_ip }}/ansible/local.ini-{{ inventory_hostname }} dest='C:\Program Files (x86)\Apache Software Foundation\CouchDB\etc\couchdb\local.ini'

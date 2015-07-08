@@ -1,0 +1,23 @@
+- name: install pywinrm
+  local_action: shell pip install http://github.com/diyan/pywinrm/archive/master.zip#egg=pywinrm
+  sudo: yes
+
+- name: install Apache2
+  local_action: yum name=httpd
+  sudo: yes
+
+- name: create an "ansible" folder that will be share via HTTP by Apache2
+  local_action: file path=/var/www/html/ansible state=directory
+  sudo: yes
+
+- name: retrieve the CouchDB Windows installer from a Apache mirror
+  local_action: get_url url=http://mirrors.ukfast.co.uk/sites/ftp.apache.org/couchdb/binary/win/1.6.1/setup-couchdb-1.6.1_R16B02.exe dest=/var/www/html/ansible/couchdb.exe force=no
+  sudo: yes
+  
+- name: ensure that Apache2 is running
+  local_action: service name=httpd state=started
+  sudo: yes
+
+- name: disable the firewall
+  local_action: service name=iptables state=stopped
+  sudo: yes

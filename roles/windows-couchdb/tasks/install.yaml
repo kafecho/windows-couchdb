@@ -1,0 +1,9 @@
+---
+- name: retrieve the CouchDB Windows installer from the deployment node
+  win_get_url: url=http://{{ deployment_node_ip }}/ansible/couchdb.exe  dest="C:\Users\{{ ansible_ssh_user }}\Downloads\couchdb.exe"
+
+- name: stop left-over Erlang processes (otherwise, the installation via PowerShell will fail)
+  script: stoperlang.ps1
+
+- name: proceed to a silent install of couchdb
+  script: installcouchdb.ps1 "C:\Users\{{ ansible_ssh_user }}\Downloads\couchdb.exe"

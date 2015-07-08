@@ -1,0 +1,2 @@
+- name: say hi
+  local_action: shell echo hi

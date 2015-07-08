@@ -1,0 +1,5 @@
+---
+nic: eth1
+web_root: /var/www/html
+couchdb_bind_address: 0.0.0.0
+couchdb_port: 5984

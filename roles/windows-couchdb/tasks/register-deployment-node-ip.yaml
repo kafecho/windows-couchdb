@@ -1,0 +1,8 @@
+---
+- name: find the ip address of the deployment node
+  local_action: "shell ifconfig {{ nic }} | grep 'inet addr' | awk -F: '{print $2}' | awk '{print $1}'"
+  register: find_deployment_node_ip
+
+- name: register the ip address of the deployment node
+  set_fact:
+   deployment_node_ip: "{{ find_deployment_node_ip.stdout }}"
