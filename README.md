@@ -38,11 +38,29 @@ None
 Example Playbook
 ----------------
 
+Given an inventory file (inventory) that looks like this: 
+
+    [windows]
+    192.168.56.102
+
+    [windows:vars]
+    ansible_ssh_user=DarthVader
+    ansible_ssh_pass=IAmYourFather
+    ansible_ssh_port=5986
+    ansible_connection=winrm
+
+and a playbook (test.yaml) that looks like that:
+
     ---
     - hosts: windows
       gather_facts: no
       roles:
       - {role: windows-couchdb, nic: eth1, couchdb_port: 5984 }
+      
+
+then this should work:
+
+    ansible-playbook -i inventory test.yaml 
 
 License
 -------
