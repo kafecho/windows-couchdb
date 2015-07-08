@@ -12,10 +12,16 @@ It has been tested with a Linux node running CentOS 6.6 and Ansible 1.9.1 and a 
 
 You must ensure that your Windows nodes have been correctly configured with PowerShell and WinRM ( see: http://docs.ansible.com/intro_windows.html ). 
 
+You might have to configure your Windows firewall to allow external access to the CouchDB instance once it has been installed.
+
 How it works
 ------------
 
-Due to the limited Windows support in Ansible 1.9.1 (i.e. lack of windows template module), this role implements a "phone home" pattern where some of the tasks run on the Ansible 'control' node. The Windows node then get in touch (via HTTP) to retrieve the results of certain actions. 
+Due to the limited Windows support in Ansible 1.9.1 (i.e. lack of a windows template module), this role implements a "phone home" pattern where some of the tasks run on the Ansible 'control' node. The Windows nodes then get in touch (via HTTP) to retrieve the results of tasks.
+
+The role also uses PowerShell scripts in places to drive the installers.
+
+For more information, see these slides: http://www.slideshare.net/jhawkesworth/ansible-windows-and-powershellpresentation
 
 Role Variables
 --------------
@@ -28,7 +34,6 @@ Dependencies
 ------------
 
 None
-
 
 Example Playbook
 ----------------
