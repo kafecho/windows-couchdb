@@ -1,3 +1,11 @@
+- name: install EPEL
+  local_action: yum name=epel-release
+  sudo: yes
+
+- name: install pip
+  local_action: yum name=python-pip
+  sudo: yes
+
 - name: install pywinrm
   local_action: shell pip install http://github.com/diyan/pywinrm/archive/master.zip#egg=pywinrm
   sudo: yes
@@ -6,7 +14,7 @@
   local_action: yum name=httpd
   sudo: yes
 
-- name: create an "ansible" folder that will be share via HTTP by Apache2
+- name: create an "ansible" folder that will be shared via HTTP by Apache2
   local_action: file path=/var/www/html/ansible state=directory
   sudo: yes
 
